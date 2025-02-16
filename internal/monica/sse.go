@@ -219,7 +219,7 @@ func StreamMonicaSSEToClient(model string, w io.Writer, r io.Reader) error {
 
 // handleNonStreamingResponse 处理非流式响应
 func HandleNonStreamingResponse(model string, r io.Reader) (*types.ChatCompletionResponse, error) {
-    str1 := "hello"
+    var str1 string = "hello"
     reader := bufio.NewReaderSize(r, bufferSize)
     var contentBuilder strings.Builder
     
@@ -229,7 +229,6 @@ func HandleNonStreamingResponse(model string, r io.Reader) (*types.ChatCompletio
     
     for {
         line, err := reader.ReadString('\n')
-	str1 = str1+line+"aa1"
 	
         if err != nil {
             if err == io.EOF {
