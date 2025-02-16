@@ -20,7 +20,27 @@ func main() {
 	}
 
 	e := echo.New()
-	e.Use(middleware.Logger())
+    // 配置Echo Logger
+    e.Logger.SetLevel(log.DEBUG) // 设置日志级别为DEBUG以显示所有日志
+    
+    // 配置日志输出格式
+    e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+        Format: `{"time":"${time_rfc3339_nano}","level":"${level}","id":"${id}",` +
+            `"remote_ip":"${remote_ip}","host":"${host}","method":"${method}","uri":"${uri}",` +
+            `"user_agent":"${user_agent}","status":${status},"error":"${error}","latency":${latency},` +
+            `"latency_human":"${latency_human}","bytes_in":${bytes_in},"bytes_out":${bytes_out},` +
+            `"message":"${message}"}` + "\n",
+        Output: os.Stdout,
+    }))
+
+    // 添加自定义日志中间件
+    e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
+        return func(c echo.Context) error {
+            // 将Echo logger实例添加到上下文中
+            c.Set("logger", e.Logger)
+            return next(c)
+        }
+    })
 	e.Use(middleware.Recover())
 	// 注册路由
 	apiserver.RegisterRoutes(e)
