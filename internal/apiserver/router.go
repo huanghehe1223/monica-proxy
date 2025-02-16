@@ -112,14 +112,28 @@ type MonicaSSEEvent struct {
     } `json:"choices"`
 }
 
-func handleNonStreamingResponse(c echo.Context, req openai.ChatCompletionRequest, body io.ReadCloser) error {
+func handleNonStreamingResponse(c echo.Context, req openai.ChatCompletionRequest, r io.Reader) error {
     ctx, cancel := context.WithTimeout(c.Request().Context(), 30*time.Second)
     defer cancel()
 
-    var fullContent strings.Builder
-    var firstEvent *MonicaSSEEvent // 保存第一个事件用于获取元数据
-    scanner := bufio.NewScanner(body)
+    // 使用pipe来模拟writer
+    pr, pw := io.Pipe()
+    
+    // 启动goroutine处理SSE转换
+    go func() {
+        defer pw.Close()
+        if err := monica.StreamMonicaSSEToClient(req.Model, pw, r); err != nil {
+            pw.CloseWithError(err)
+        }
+    }()
 
+    var fullContent strings.Builder
+    scanner := bufio.NewScanner(pr)
+    var chatId string
+    var created int64
+    var fingerprint string
+
+    // 收集转换后的SSE内容
     for scanner.Scan() {
         select {
         case <-ctx.Done():
@@ -134,18 +148,21 @@ func handleNonStreamingResponse(c echo.Context, req openai.ChatCompletionRequest
                     continue
                 }
 
-                var event MonicaSSEEvent
-                if err := json.Unmarshal([]byte(data), &event); err != nil {
+                var streamResp types.ChatCompletionStreamResponse
+                if err := json.Unmarshal([]byte(data), &streamResp); err != nil {
                     continue
                 }
 
-                // 保存第一个事件的元数据
-                if firstEvent == nil {
-                    firstEvent = &event
+                // 保存第一个消息的元数据
+                if chatId == "" {
+                    chatId = streamResp.ID
+                    created = streamResp.Created
+                    fingerprint = streamResp.SystemFingerprint
                 }
 
-                if len(event.Choices) > 0 && event.Choices[0].Delta.Content != "" {
-                    fullContent.WriteString(event.Choices[0].Delta.Content)
+                // 收集content内容
+                if len(streamResp.Choices) > 0 && streamResp.Choices[0].Delta.Content != "" {
+                    fullContent.WriteString(streamResp.Choices[0].Delta.Content)
                 }
             }
         }
@@ -157,18 +174,18 @@ func handleNonStreamingResponse(c echo.Context, req openai.ChatCompletionRequest
         })
     }
 
-    // 使用第一个事件的元数据构造响应
+    // 构造完整响应
     response := openai.ChatCompletionResponse{
-        ID:                firstEvent.ID,
-        Object:           "chat.completion",
-        Created:          firstEvent.Created,
-        Model:            firstEvent.Model,
-        SystemFingerprint: firstEvent.SystemFingerprint,
+        ID:                chatId,
+        Object:            "chat.completion",
+        Created:           created,
+        Model:            req.Model,
+        SystemFingerprint: fingerprint,
         Choices: []openai.ChatCompletionChoice{
             {
                 Index: 0,
                 Message: openai.ChatCompletionMessage{
-                    Role:    "assistant", // 使用固定的assistant角色
+                    Role:    "assistant",
                     Content: fullContent.String(),
                 },
                 FinishReason: "stop",
