@@ -215,3 +215,77 @@ func StreamMonicaSSEToClient(model string, w io.Writer, r io.Reader) error {
 		sseDataPool.Put(sseObj)
 	}
 }
+
+// handleNonStreamingResponse 处理非流式响应
+func HandleNonStreamingResponse(model string, r io.Reader) (*types.ChatCompletionResponse, error) {
+    reader := bufio.NewReaderSize(r, bufferSize)
+    var contentBuilder strings.Builder
+    
+    // 生成响应所需的ID等信息
+    chatId := utils.RandStringUsingMathRand(29)
+    now := time.Now().Unix()
+    
+    for {
+        line, err := reader.ReadString('\n')
+        if err != nil {
+            if err == io.EOF {
+                break
+            }
+            return nil, fmt.Errorf("read error: %w", err)
+        }
+
+        // 跳过非data行
+        if !strings.HasPrefix(line, "data: ") {
+            continue
+        }
+
+        jsonStr := strings.TrimPrefix(line, "data: ")
+        if jsonStr == "" {
+            continue
+        }
+
+        // 解析SSE数据
+        var sseObj SSEData
+        if err := sonic.UnmarshalString(jsonStr, &sseObj); err != nil {
+            // 记录错误但继续处理
+            log.Printf("Error unmarshaling SSE data: %v", err)
+            continue
+        }
+
+            contentBuilder.WriteString(sseObj.Text)
+
+
+        // 如果发现finished标记，结束处理
+        if sseObj.Finished {
+            break
+        }
+    }
+
+    // 构造完整的响应
+    response := &types.ChatCompletionResponse{
+        ID:      "chatcmpl-" + chatId,
+        Object:  "chat.completion",
+        Created: now,
+        Model:   model,
+        Choices: []types.ChatCompletionChoice{
+            {
+                Index: 0,
+                Message: types.ChatCompletionMessage{
+                    Role:    "assistant",
+                    Content: contentBuilder.String(),
+                },
+                FinishReason: "stop",
+            },
+        },
+        Usage: types.ChatCompletionUsage{
+            // 这里可以根据需要设置token使用情况
+            PromptTokens:     0,
+            CompletionTokens: 0,
+            TotalTokens:      0,
+        },
+    }
+
+    return response, nil
+}
+
+
