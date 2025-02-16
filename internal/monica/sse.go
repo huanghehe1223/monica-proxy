@@ -227,6 +227,7 @@ func HandleNonStreamingResponse(model string, r io.Reader) (*types.ChatCompletio
     
     for {
         line, err := reader.ReadString('\n')
+	log.Printf("Non-Stream SSE raw line: %s", line) 
         if err != nil {
             if err == io.EOF {
                 break
