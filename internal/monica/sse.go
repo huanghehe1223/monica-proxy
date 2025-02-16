@@ -269,7 +269,7 @@ func HandleNonStreamingResponse(model string, r io.Reader) (*types.ChatCompletio
         ID:      "chatcmpl-" + chatId,
         Object:  "chat.completion",
         Created: now,
-        Model:   model,
+        Model:   str1,
 	SystemFingerprint: str1,
         Choices: []types.ChatCompletionChoice{
             {
