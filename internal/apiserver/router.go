@@ -5,7 +5,6 @@ import (
         "context"
         "encoding/json"
         "io"
-        "net/http"
         "strings"
         "time"
         "github.com/google/uuid"
