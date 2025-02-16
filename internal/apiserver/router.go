@@ -95,103 +95,76 @@ func handleListModels(c echo.Context) error {
 	return c.JSON(http.StatusOK, models)
 }
 
-// 更新Event结构定义
-type MonicaSSEEvent struct {
-    ID                string    `json:"id"`
-    Object            string    `json:"object"`
-    Created           int64     `json:"created"`
-    Model             string    `json:"model"`
-    SystemFingerprint string    `json:"system_fingerprint"`
-    Choices           []struct {
-        Index        int `json:"index"`
-        Delta       struct {
-            Content string `json:"content"`
-            Role    string `json:"role"`
-        } `json:"delta"`
-        FinishReason string `json:"finish_reason"`
-    } `json:"choices"`
-}
-
-func handleNonStreamingResponse(c echo.Context, req openai.ChatCompletionRequest, r io.Reader) error {
-    ctx, cancel := context.WithTimeout(c.Request().Context(), 30*time.Second)
-    defer cancel()
-
-    // 使用pipe来模拟writer
-    pr, pw := io.Pipe()
+func handleNonStreamingResponse(c echo.Context, req openai.ChatCompletionRequest, body io.Reader) error {
+    reader := bufio.NewReader(body)
+    var sb strings.Builder
     
-    // 启动goroutine处理SSE转换
-    go func() {
-        defer pw.Close()
-        if err := monica.StreamMonicaSSEToClient(req.Model, pw, r); err != nil {
-            pw.CloseWithError(err)
-        }
-    }()
-
-    var fullContent strings.Builder
-    scanner := bufio.NewScanner(pr)
-    var chatId string
-    var created int64
-    var fingerprint string
-
-    // 收集转换后的SSE内容
-    for scanner.Scan() {
-        select {
-        case <-ctx.Done():
-            return c.JSON(http.StatusGatewayTimeout, map[string]interface{}{
-                "error": "request timeout",
-            })
-        default:
-            line := scanner.Text()
-            if strings.HasPrefix(line, "data: ") {
-                data := line[6:]
-                if data == "[DONE]" {
-                    continue
-                }
-
-                var streamResp types.ChatCompletionStreamResponse
-                if err := json.Unmarshal([]byte(data), &streamResp); err != nil {
-                    continue
-                }
-
-                // 保存第一个消息的元数据
-                if chatId == "" {
-                    chatId = streamResp.ID
-                    created = streamResp.Created
-                    fingerprint = streamResp.SystemFingerprint
-                }
-
-                // 收集content内容
-                if len(streamResp.Choices) > 0 && streamResp.Choices[0].Delta.Content != "" {
-                    fullContent.WriteString(streamResp.Choices[0].Delta.Content)
-                }
+    // 用于解析SSE数据
+    var streamResp types.ChatCompletionStreamResponse
+    
+    created := time.Now().Unix()
+    chatId := uuid.New().String()
+    
+    for {
+        line, err := reader.ReadString('\n')
+        if err != nil {
+            if err == io.EOF {
+                break
             }
+            return err
+        }
+
+        // 跳过非data行
+        if !strings.HasPrefix(line, "data: ") {
+            continue
+        }
+
+        // 去掉data: 前缀
+        jsonStr := strings.TrimPrefix(line, "data: ")
+        jsonStr = strings.TrimSpace(jsonStr)
+        
+        // 检查是否结束
+        if jsonStr == "[DONE]" {
+            break
+        }
+
+        // 解析SSE JSON
+        if err := json.Unmarshal([]byte(jsonStr), &streamResp); err != nil {
+            continue
+        }
+
+        // 获取content并拼接
+        if len(streamResp.Choices) > 0 {
+            content := streamResp.Choices[0].Delta.Content
+            // 处理thinking标记
+            if content == "<think>" {
+                continue
+            }
+            if strings.HasPrefix(content, "</think>") {
+                content = strings.TrimPrefix(content, "</think>")
+            }
+            sb.WriteString(content)
         }
     }
 
-    if err := scanner.Err(); err != nil {
-        return c.JSON(http.StatusInternalServerError, map[string]interface{}{
-            "error": "Error reading response: " + err.Error(),
-        })
-    }
-
-    // 构造完整响应
-    response := openai.ChatCompletionResponse{
-        ID:                chatId,
-        Object:            "chat.completion",
-        Created:           created,
-        Model:            req.Model,
-        SystemFingerprint: fingerprint,
+    // 构造非流式响应
+    response := &openai.ChatCompletionResponse{
+        ID:      "chatcmpl-" + chatId,
+        Object:  "chat.completion",
+        Created: created,
+        Model:   req.Model,
         Choices: []openai.ChatCompletionChoice{
             {
                 Index: 0,
                 Message: openai.ChatCompletionMessage{
-                    Role:    "assistant",
-                    Content: fullContent.String(),
+                    Role:    openai.ChatMessageRoleAssistant,
+                    Content: sb.String(),
                 },
-                FinishReason: "stop",
+                FinishReason: openai.FinishReasonStop,
             },
         },
         Usage: openai.Usage{
+            // Monica不提供token统计,这里简单置0
             PromptTokens:     0,
             CompletionTokens: 0,
             TotalTokens:      0,
