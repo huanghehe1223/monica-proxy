@@ -95,82 +95,21 @@ func handleListModels(c echo.Context) error {
 	return c.JSON(http.StatusOK, models)
 }
 
+// handleNonStreamingResponse 处理非流式响应
 func handleNonStreamingResponse(c echo.Context, req openai.ChatCompletionRequest, body io.Reader) error {
-    reader := bufio.NewReader(body)
-    var sb strings.Builder
-    
-    // 用于解析SSE数据
-    var streamResp types.ChatCompletionStreamResponse
-    
-    created := time.Now().Unix()
-    chatId := uuid.New().String()
-    
-    for {
-        line, err := reader.ReadString('\n')
-        if err != nil {
-            if err == io.EOF {
-                break
-            }
-            return err
-        }
-
-        // 跳过非data行
-        if !strings.HasPrefix(line, "data: ") {
-            continue
-        }
-
-        // 去掉data: 前缀
-        jsonStr := strings.TrimPrefix(line, "data: ")
-        jsonStr = strings.TrimSpace(jsonStr)
-        
-        // 检查是否结束
-        if jsonStr == "[DONE]" {
-            break
-        }
-
-        // 解析SSE JSON
-        if err := json.Unmarshal([]byte(jsonStr), &streamResp); err != nil {
-            continue
-        }
-
-        // 获取content并拼接
-        if len(streamResp.Choices) > 0 {
-            content := streamResp.Choices[0].Delta.Content
-            // 处理thinking标记
-            if content == "<think>" {
-                continue
-            }
-            if strings.HasPrefix(content, "</think>") {
-                content = strings.TrimPrefix(content, "</think>")
-            }
-            sb.WriteString(content)
-        }
+    // 构造响应
+    response, err := monica.HandleNonStreamingResponse(req.Model, body)
+    if err != nil {
+        return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+            "error": err.Error(),
+        })
     }
 
-    // 构造非流式响应
-    response := &openai.ChatCompletionResponse{
-        ID:      "chatcmpl-" + chatId,
-        Object:  "chat.completion",
-        Created: created,
-        Model:   req.Model,
-        Choices: []openai.ChatCompletionChoice{
-            {
-                Index: 0,
-                Message: openai.ChatCompletionMessage{
-                    Role:    openai.ChatMessageRoleAssistant,
-                    Content: sb.String(),
-                },
-                FinishReason: openai.FinishReasonStop,
-            },
-        },
-        Usage: openai.Usage{
-            // Monica不提供token统计,这里简单置0
-            PromptTokens:     0,
-            CompletionTokens: 0,
-            TotalTokens:      0,
-        },
-    }
-
+    // 设置响应头
+    c.Response().Header().Set("Content-Type", "application/json")
+    c.Response().Header().Set("Cache-Control", "no-cache")
+    
+    // 返回JSON响应
     return c.JSON(http.StatusOK, response)
 }
 
