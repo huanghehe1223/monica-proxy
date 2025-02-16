@@ -83,6 +83,7 @@ func StreamMonicaSSEToClient(model string, w io.Writer, r io.Reader) error {
 	var thinkFlag bool
 	for {
 		line, err := reader.ReadString('\n')
+		log.Printf("Non-Stream SSE raw line: %s", line) 
 		if err != nil {
 			if err == io.EOF {
 				return nil
