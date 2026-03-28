@@ -103,6 +103,7 @@ export BEARER_TOKEN="your_token"
 | `RATE_LIMIT_RPS`         | ❌  | `0`       | 限流配置：0=禁用，>0=每秒请求数限制                             |
 | `TLS_SKIP_VERIFY`        | ❌  | `true`    | 是否跳过TLS证书验证                                      |
 | `LOG_LEVEL`              | ❌  | `info`    | 日志级别：debug/info/warn/error                       |
+| `ENABLE_TRAFFIC_LOG`     | ❌  | `false`   | 是否记录请求/响应明细到 `logs/` 目录                       |
 | `SERVER_PORT`            | ❌  | `8080`    | HTTP服务监听端口                                       |
 | `SERVER_HOST`            | ❌  | `0.0.0.0` | HTTP服务监听地址                                       |
 
@@ -136,6 +137,7 @@ http_client:
 logging:
   level: "info"
   format: "json"
+  enable_traffic_log: false
   mask_sensitive: true
 ```
 

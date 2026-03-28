@@ -54,5 +54,7 @@ logging:
   output: "stdout"
   # 是否启用请求日志
   enable_request_log: true
+  # 是否启用请求/响应明细日志落盘（logs/目录）
+  enable_traffic_log: false
   # 是否掩盖敏感信息
   mask_sensitive: true

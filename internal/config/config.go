@@ -74,6 +74,7 @@ type LoggingConfig struct {
 	Format           string `yaml:"format" json:"format"`
 	Output           string `yaml:"output" json:"output"`
 	EnableRequestLog bool   `yaml:"enable_request_log" json:"enable_request_log"`
+	EnableTrafficLog bool   `yaml:"enable_traffic_log" json:"enable_traffic_log"`
 	MaskSensitive    bool   `yaml:"mask_sensitive" json:"mask_sensitive"`
 }
 
@@ -137,6 +138,7 @@ func getDefaultConfig() *Config {
 			Format:           "json",
 			Output:           "stdout",
 			EnableRequestLog: true,
+			EnableTrafficLog: false,
 			MaskSensitive:    true,
 		},
 	}
@@ -253,6 +255,11 @@ func overrideWithEnv(config *Config) {
 	}
 	if format := os.Getenv("LOG_FORMAT"); format != "" {
 		config.Logging.Format = format
+	}
+	if enableTrafficLog := os.Getenv("ENABLE_TRAFFIC_LOG"); enableTrafficLog != "" {
+		if enabled, err := strconv.ParseBool(enableTrafficLog); err == nil {
+			config.Logging.EnableTrafficLog = enabled
+		}
 	}
 }
 
