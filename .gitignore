@@ -35,8 +35,10 @@ go.work.sum
 !monica_test.go
 !*_test.go
 .idx
-
+config.yaml
 
 # windsurf rules
 .windsurfrules
 .codanna
+test_bot_api.go
+tmp_test_monica_api.go

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"monica-proxy/internal/config"
 	"monica-proxy/internal/logger"
+"sync"
 	"sync/atomic"
 	"time"
 
@@ -211,7 +212,7 @@ type OpenAIModelList struct {
 	Data   []OpenAIModel `json:"data"`
 }
 
-var modelToBotMap = map[string]string{
+var defaultModelToBotMap = map[string]string{
 	// OpenAI 系列
 	"gpt-5":        "gpt_5",
 	"gpt-4o":       "gpt_4_o_chat",
@@ -258,13 +259,32 @@ var modelToBotMap = map[string]string{
 	"grok-code-fast-1": "grok_code_fast_1",
 }
 
+	// 必须引入 sync 防止并发读写映射表错误
+	
 func modelToBot(model string) string {
-	if botUID, ok := modelToBotMap[model]; ok {
+	dynamicModelMutex.RLock()
+	if botUID, ok := dynamicModelToBotMap[model]; ok {
+		dynamicModelMutex.RUnlock()
 		return botUID
 	}
-	// 如果未找到映射，则返回原始模型名称
-	logger.Warn("未找到模型映射，使用原始名称", zap.String("model", model))
+	dynamicModelMutex.RUnlock()
+	// 动态表中未命中时，保留原始模型名称用于后续容错
+	logger.Warn("动态模型映射未命中，使用原始模型名称", zap.String("model", model))
 	return model
+}
+
+var (
+	dynamicModelToBotMap = make(map[string]string)
+	dynamicModelMutex    sync.RWMutex
+)
+
+// UpdateDynamicModels 更新动态模型映射
+func UpdateDynamicModels(newMap map[string]string) {
+	dynamicModelMutex.Lock()
+	defer dynamicModelMutex.Unlock()
+	for k, v := range newMap {
+		dynamicModelToBotMap[k] = v
+	}
 }
 
 // CustomBotRequest 定义custom bot的请求结构
@@ -322,15 +342,34 @@ const (
 	CustomBotPublishURL = "https://api.monica.im/api/custom_bot/publish_bot"
 	CustomBotPinURL     = "https://api.monica.im/api/custom_bot/pin_bot"
 	CustomBotChatURL    = "https://api.monica.im/api/custom_bot/preview_chat"
+	ListPinedBotURL     = "https://api.monica.im/api/custom_bot/list_my_pined_bot"
 )
 
-// GetSupportedModels 获取支持的模型列表
-// 从 modelToBotMap 自动生成，确保映射表和支持列表始终一致
+// ListPinedBotResponse 获取收藏bot的响应
+type ListPinedBotResponse struct {
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
+	Data struct {
+		PinBots []struct {
+			Name        string `json:"name"`
+			Description string `json:"description"`
+			UserID      int    `json:"user_id"`
+			ToolData    struct {
+				UseModel string `json:"use_model"`
+			} `json:"tool_data"`
+			UID string `json:"uid"`
+		} `json:"pin_bots"`
+	} `json:"data"`
+}
+
+// GetSupportedModels 获取支持的模型列表（仅动态）
 func GetSupportedModels() []string {
-	models := make([]string, 0, len(modelToBotMap))
-	for model := range modelToBotMap {
+	dynamicModelMutex.RLock()
+	models := make([]string, 0, len(dynamicModelToBotMap))
+	for model := range dynamicModelToBotMap {
 		models = append(models, model)
 	}
+	dynamicModelMutex.RUnlock()
 	return models
 }
 
