@@ -1,0 +1,4 @@
+interface:
+  display_name: "Edit Figure"
+  short_description: "Convert figures into editable draw.io or SVG with MCP tools."
+  default_prompt: "Convert this figure into an editable draw.io file."

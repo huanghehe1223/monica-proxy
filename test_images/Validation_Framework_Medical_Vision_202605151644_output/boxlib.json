@@ -1,0 +1,79 @@
+{
+  "image_size": {
+    "width": 1376,
+    "height": 768
+  },
+  "prompts_used": [
+    "document",
+    "monitor",
+    "eye mask",
+    "stopwatch",
+    "gear",
+    "scale",
+    "brain",
+    "icon"
+  ],
+  "boxes": [
+    {
+      "id": 0,
+      "label": "<AF>01",
+      "x1": 1006,
+      "y1": 597,
+      "x2": 1046,
+      "y2": 639,
+      "score": 0.859375,
+      "prompt": "gear",
+      "width": 40,
+      "height": 42
+    },
+    {
+      "id": 1,
+      "label": "<AF>02",
+      "x1": 1091,
+      "y1": 600,
+      "x2": 1134,
+      "y2": 640,
+      "score": 0.8203125,
+      "prompt": "icon",
+      "width": 43,
+      "height": 40
+    },
+    {
+      "id": 2,
+      "label": "<AF>03",
+      "x1": 1177,
+      "y1": 598,
+      "x2": 1221,
+      "y2": 639,
+      "score": 0.8515625,
+      "prompt": "icon",
+      "width": 44,
+      "height": 41
+    },
+    {
+      "id": 3,
+      "label": "<AF>04",
+      "x1": 569,
+      "y1": 249,
+      "x2": 852,
+      "y2": 462,
+      "score": 0.80078125,
+      "prompt": "icon",
+      "width": 283,
+      "height": 213
+    },
+    {
+      "id": 4,
+      "label": "<AF>05",
+      "x1": 982,
+      "y1": 236,
+      "x2": 1158,
+      "y2": 372,
+      "score": 0.86328125,
+      "prompt": "monitor",
+      "width": 176,
+      "height": 136
+    }
+  ],
+  "no_icon_mode": false
+}

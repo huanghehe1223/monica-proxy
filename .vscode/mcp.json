@@ -1,0 +1,16 @@
+{
+	"servers": {
+		"edit-figure": {
+			"type": "stdio",
+			"command": "/usr/bin/python3",
+			"args": [
+				"-s",
+				"/kaggle/working/Edit-Figure-MCP/edit_figure_mcp_server.py"
+			],
+			"env":{
+				"ROBOFLOW_API_KEY": "vJfqq4sPfI9zN2gAcAOe"
+			}
+		}
+	},
+	"inputs": []
+}

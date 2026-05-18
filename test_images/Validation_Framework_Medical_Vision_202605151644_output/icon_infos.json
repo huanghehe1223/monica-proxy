@@ -1,0 +1,117 @@
+[
+  {
+    "id": 0,
+    "label": "<AF>01",
+    "label_clean": "AF01",
+    "x1": 1006,
+    "y1": 597,
+    "x2": 1046,
+    "y2": 639,
+    "width": 40,
+    "height": 42,
+    "crop_path": "/kaggle/working/monica-proxy/test_images/Validation_Framework_Medical_Vision_202605151644_output/icons/icon_AF01.png",
+    "nobg_path": "/kaggle/working/monica-proxy/test_images/Validation_Framework_Medical_Vision_202605151644_output/icons_nobg/icon_AF01_nobg.png",
+    "original_size": [
+      40,
+      42
+    ],
+    "resized_size": [
+      488,
+      512
+    ],
+    "pad_left": 12,
+    "pad_top": 0
+  },
+  {
+    "id": 1,
+    "label": "<AF>02",
+    "label_clean": "AF02",
+    "x1": 1091,
+    "y1": 600,
+    "x2": 1134,
+    "y2": 640,
+    "width": 43,
+    "height": 40,
+    "crop_path": "/kaggle/working/monica-proxy/test_images/Validation_Framework_Medical_Vision_202605151644_output/icons/icon_AF02.png",
+    "nobg_path": "/kaggle/working/monica-proxy/test_images/Validation_Framework_Medical_Vision_202605151644_output/icons_nobg/icon_AF02_nobg.png",
+    "original_size": [
+      43,
+      40
+    ],
+    "resized_size": [
+      512,
+      476
+    ],
+    "pad_left": 0,
+    "pad_top": 18
+  },
+  {
+    "id": 2,
+    "label": "<AF>03",
+    "label_clean": "AF03",
+    "x1": 1177,
+    "y1": 598,
+    "x2": 1221,
+    "y2": 639,
+    "width": 44,
+    "height": 41,
+    "crop_path": "/kaggle/working/monica-proxy/test_images/Validation_Framework_Medical_Vision_202605151644_output/icons/icon_AF03.png",
+    "nobg_path": "/kaggle/working/monica-proxy/test_images/Validation_Framework_Medical_Vision_202605151644_output/icons_nobg/icon_AF03_nobg.png",
+    "original_size": [
+      44,
+      41
+    ],
+    "resized_size": [
+      512,
+      477
+    ],
+    "pad_left": 0,
+    "pad_top": 17
+  },
+  {
+    "id": 3,
+    "label": "<AF>04",
+    "label_clean": "AF04",
+    "x1": 569,
+    "y1": 249,
+    "x2": 852,
+    "y2": 462,
+    "width": 283,
+    "height": 213,
+    "crop_path": "/kaggle/working/monica-proxy/test_images/Validation_Framework_Medical_Vision_202605151644_output/icons/icon_AF04.png",
+    "nobg_path": "/kaggle/working/monica-proxy/test_images/Validation_Framework_Medical_Vision_202605151644_output/icons_nobg/icon_AF04_nobg.png",
+    "original_size": [
+      283,
+      213
+    ],
+    "resized_size": [
+      512,
+      385
+    ],
+    "pad_left": 0,
+    "pad_top": 63
+  },
+  {
+    "id": 4,
+    "label": "<AF>05",
+    "label_clean": "AF05",
+    "x1": 982,
+    "y1": 236,
+    "x2": 1158,
+    "y2": 372,
+    "width": 176,
+    "height": 136,
+    "crop_path": "/kaggle/working/monica-proxy/test_images/Validation_Framework_Medical_Vision_202605151644_output/icons/icon_AF05.png",
+    "nobg_path": "/kaggle/working/monica-proxy/test_images/Validation_Framework_Medical_Vision_202605151644_output/icons_nobg/icon_AF05_nobg.png",
+    "original_size": [
+      176,
+      136
+    ],
+    "resized_size": [
+      512,
+      396
+    ],
+    "pad_left": 0,
+    "pad_top": 58
+  }
+]
