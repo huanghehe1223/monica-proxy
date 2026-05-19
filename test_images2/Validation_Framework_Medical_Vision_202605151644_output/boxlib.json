@@ -4,19 +4,31 @@
     "height": 768
   },
   "prompts_used": [
-    "document",
     "monitor",
-    "eye mask",
-    "stopwatch",
+    "document",
+    "glasses",
     "gear",
     "scale",
     "brain",
+    "timer",
     "icon"
   ],
   "boxes": [
     {
       "id": 0,
       "label": "<AF>01",
+      "x1": 1161,
+      "y1": 330,
+      "x2": 1244,
+      "y2": 371,
+      "score": 0.828125,
+      "prompt": "timer",
+      "width": 83,
+      "height": 41
+    },
+    {
+      "id": 1,
+      "label": "<AF>02",
       "x1": 1006,
       "y1": 597,
       "x2": 1046,
@@ -27,8 +39,8 @@
       "height": 42
     },
     {
-      "id": 1,
-      "label": "<AF>02",
+      "id": 2,
+      "label": "<AF>03",
       "x1": 1091,
       "y1": 600,
       "x2": 1134,
@@ -39,8 +51,8 @@
       "height": 40
     },
     {
-      "id": 2,
-      "label": "<AF>03",
+      "id": 3,
+      "label": "<AF>04",
       "x1": 1177,
       "y1": 598,
       "x2": 1221,
@@ -51,8 +63,8 @@
       "height": 41
     },
     {
-      "id": 3,
-      "label": "<AF>04",
+      "id": 4,
+      "label": "<AF>05",
       "x1": 569,
       "y1": 249,
       "x2": 852,
@@ -63,8 +75,8 @@
       "height": 213
     },
     {
-      "id": 4,
-      "label": "<AF>05",
+      "id": 5,
+      "label": "<AF>06",
       "x1": 982,
       "y1": 236,
       "x2": 1158,

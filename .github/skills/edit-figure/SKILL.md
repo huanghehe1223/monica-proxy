@@ -78,7 +78,6 @@ If an EOF marker is not found, stop and report that the resource file was not fu
 
 1. Determine the target format.
    - If the user explicitly asks for SVG, produce SVG.
-   - If the user asks for both draw.io and SVG, produce both.
    - Otherwise default to draw.io.
 
 2. Plan segmentation.
@@ -103,19 +102,41 @@ If an EOF marker is not found, stop and report that the resource file was not fu
    - If the first result is acceptable, or if the misses are editable elements that should be redrawn, do not rerun segmentation.
 
 5. Generate the editable template file in the MCP output directory.
-   - For draw.io, read `prompts/template_prompt_drawio.md`.
+   - For draw.io:
+     - Read `prompts/template_prompt_drawio.md` completely before writing the template.
+     - Strictly follow all requirements, constraints, formatting rules, placeholder rules, output rules, and validation instructions in `prompts/template_prompt_drawio.md`.
      - Write directly to `{output_dir}/template.drawio`.
      - Set `template_path` to that relative path.
-   - For SVG, read `prompts/template_prompt_svg.md`.
+   - For SVG:
+     - Read `prompts/template_prompt_svg.md` completely before writing the template.
+     - Strictly follow all requirements, constraints, formatting rules, placeholder rules, output rules, and validation instructions in `prompts/template_prompt_svg.md`.
      - Write directly to `{output_dir}/template.svg`.
      - Set `template_path` to that relative path.
-   - Use the original image, `samed_image`, and `boxlib_json` as inputs.
+   - Treat the selected template prompt file as the authoritative specification for generating the template.
+   - Do not simplify, reinterpret, skip, or partially apply the selected template prompt's instructions.
+   - Use the original image, `samed_image`, and the complete `boxlib_json` as required inputs.
+   - Read and parse the complete `boxlib_json` before writing the template.
    - Preserve the original image coordinate system from `boxlib.json.image_size`.
-   - Create every `<AF>xx` placeholder exactly as instructed by the selected template prompt.
-   - Do not embed the original raster figure or cropped icons in the template.
+   - Create placeholders only as required by the selected template prompt and `boxlib.json`.
+   - Do not embed the original raster figure or cropped icons in the template unless the selected template prompt explicitly allows it.
    - Do not paste the full template code in chat unless the user explicitly asks; create the file in the workspace.
 
-6. Call MCP tool `replace_template_placeholders`.
+6. Preview and optimize the template.
+   - After writing `template.drawio` or `template.svg`, call MCP tool `export_diagram_png` with `workspace_dir` and `source_path` set to `{output_dir}/template.drawio` or `{output_dir}/template.svg`, relative to `workspace_dir`.
+   - Open and inspect the exported template PNG; compare it against both the original input image and `samed_image` (`samed.png`).
+   - Do not assume `.drawio` or `.svg` files can be visually inspected directly; they must be exported to PNG before visual comparison.
+   - Check whether model-drawn editable non-icon elements are correctly positioned relative to the masked/icon placeholder regions in `samed_image`; if misaligned, adjust editable elements first instead of moving/resizing masked/icon placeholder regions.
+   - Only adjust placeholder positions or sizes when the preview clearly shows that the placeholder geometry from `boxlib.json` is wrong or unusable.
+   - Check whether all model-drawn editable non-icon elements are faithfully reconstructed from the original image, including basic shapes, lines/arrows, text, labels, containers, connectors, colors, approximate stroke widths, spacing/alignment, and layering order.
+   - If any non-icon basic element is missing, oversimplified, poorly shaped, poorly aligned, incorrectly layered, or visually inconsistent with the original image, revise and improve the same `template.*` file.
+   - Prefer improving editable vector/text elements over changing icon placeholders.
+   - Preserve every required placeholder ID from `boxlib.json`; do not invent, remove, rename, or duplicate `<AF>xx` placeholders during optimization.
+   - Do not embed the original raster figure or cropped icons during optimization.
+   - After each revision, call `export_diagram_png` again on the revised `template.*`, then open and inspect the new exported PNG before deciding whether another revision is needed.
+   - Run at most 3 template optimization passes; stop early when there are no major visual issues.
+   - Minor unavoidable differences are acceptable if the editable structure is correct and further changes are unlikely to improve the result.
+
+7. Call MCP tool `replace_template_placeholders`.
    - Required arguments:
      - `workspace_dir`: same absolute workspace path.
      - `template_path`: `{output_dir}/template.drawio` or `{output_dir}/template.svg`, relative to `workspace_dir`.
@@ -126,7 +147,7 @@ If an EOF marker is not found, stop and report that the resource file was not fu
 ## Output Discipline
 
 - Return the final relative path from the replacement tool.
-- Mention the generated `template.*` and `final.*` paths.
+- Mention the generated `template.*`, `template preview PNG`, `final.*` paths.
 - If segmentation finds no icons, still generate the editable template and run replacement.
 - If producing both formats, reuse the same segmentation output and run template generation plus replacement once per format.
 
