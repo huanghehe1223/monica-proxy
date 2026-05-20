@@ -4,24 +4,23 @@
     "height": 768
   },
   "prompts_used": [
-    "computer",
-    "monitor",
-    "screen",
-    "x-ray",
-    "radiograph",
     "document",
     "paper",
-    "stopwatch",
+    "eye mask",
+    "mask",
+    "monitor",
+    "computer",
+    "medical image",
+    "scan",
+    "x-ray",
+    "radiograph",
     "timer",
+    "clock",
     "gear",
     "cog",
     "scale",
     "balance",
     "brain",
-    "face",
-    "head",
-    "blindfold",
-    "mask",
     "icon"
   ],
   "boxes": [
@@ -29,13 +28,13 @@
       "id": 0,
       "label": "<AF>01",
       "x1": 1161,
-      "y1": 330,
+      "y1": 329,
       "x2": 1244,
       "y2": 371,
       "score": 0.828125,
       "prompt": "timer",
       "width": 83,
-      "height": 41
+      "height": 42
     },
     {
       "id": 1,
@@ -105,7 +104,7 @@
       "x2": 1158,
       "y2": 372,
       "score": 0.86328125,
-      "prompt": "computer",
+      "prompt": "monitor",
       "width": 176,
       "height": 136
     }
