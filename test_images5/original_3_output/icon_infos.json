@@ -1,0 +1,508 @@
+[
+  {
+    "id": 0,
+    "label": "<AF>01",
+    "label_clean": "AF01",
+    "x1": 126,
+    "y1": 160,
+    "x2": 156,
+    "y2": 189,
+    "width": 30,
+    "height": 29,
+    "crop_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons/icon_AF01.png",
+    "nobg_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons_nobg/icon_AF01_nobg.png",
+    "original_size": [
+      30,
+      29
+    ],
+    "resized_size": [
+      512,
+      495
+    ],
+    "pad_left": 0,
+    "pad_top": 8
+  },
+  {
+    "id": 1,
+    "label": "<AF>02",
+    "label_clean": "AF02",
+    "x1": 717,
+    "y1": 306,
+    "x2": 791,
+    "y2": 387,
+    "width": 74,
+    "height": 81,
+    "crop_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons/icon_AF02.png",
+    "nobg_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons_nobg/icon_AF02_nobg.png",
+    "original_size": [
+      74,
+      81
+    ],
+    "resized_size": [
+      468,
+      512
+    ],
+    "pad_left": 22,
+    "pad_top": 0
+  },
+  {
+    "id": 2,
+    "label": "<AF>03",
+    "label_clean": "AF03",
+    "x1": 35,
+    "y1": 306,
+    "x2": 108,
+    "y2": 387,
+    "width": 73,
+    "height": 81,
+    "crop_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons/icon_AF03.png",
+    "nobg_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons_nobg/icon_AF03_nobg.png",
+    "original_size": [
+      73,
+      81
+    ],
+    "resized_size": [
+      461,
+      512
+    ],
+    "pad_left": 25,
+    "pad_top": 0
+  },
+  {
+    "id": 3,
+    "label": "<AF>04",
+    "label_clean": "AF04",
+    "x1": 373,
+    "y1": 306,
+    "x2": 446,
+    "y2": 387,
+    "width": 73,
+    "height": 81,
+    "crop_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons/icon_AF04.png",
+    "nobg_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons_nobg/icon_AF04_nobg.png",
+    "original_size": [
+      73,
+      81
+    ],
+    "resized_size": [
+      461,
+      512
+    ],
+    "pad_left": 25,
+    "pad_top": 0
+  },
+  {
+    "id": 4,
+    "label": "<AF>05",
+    "label_clean": "AF05",
+    "x1": 273,
+    "y1": 344,
+    "x2": 297,
+    "y2": 365,
+    "width": 24,
+    "height": 21,
+    "crop_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons/icon_AF05.png",
+    "nobg_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons_nobg/icon_AF05_nobg.png",
+    "original_size": [
+      24,
+      21
+    ],
+    "resized_size": [
+      512,
+      448
+    ],
+    "pad_left": 0,
+    "pad_top": 32
+  },
+  {
+    "id": 5,
+    "label": "<AF>06",
+    "label_clean": "AF06",
+    "x1": 82,
+    "y1": 110,
+    "x2": 107,
+    "y2": 131,
+    "width": 25,
+    "height": 21,
+    "crop_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons/icon_AF06.png",
+    "nobg_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons_nobg/icon_AF06_nobg.png",
+    "original_size": [
+      25,
+      21
+    ],
+    "resized_size": [
+      512,
+      430
+    ],
+    "pad_left": 0,
+    "pad_top": 41
+  },
+  {
+    "id": 6,
+    "label": "<AF>07",
+    "label_clean": "AF07",
+    "x1": 82,
+    "y1": 187,
+    "x2": 108,
+    "y2": 210,
+    "width": 26,
+    "height": 23,
+    "crop_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons/icon_AF07.png",
+    "nobg_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons_nobg/icon_AF07_nobg.png",
+    "original_size": [
+      26,
+      23
+    ],
+    "resized_size": [
+      512,
+      453
+    ],
+    "pad_left": 0,
+    "pad_top": 29
+  },
+  {
+    "id": 7,
+    "label": "<AF>08",
+    "label_clean": "AF08",
+    "x1": 953,
+    "y1": 124,
+    "x2": 995,
+    "y2": 167,
+    "width": 42,
+    "height": 43,
+    "crop_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons/icon_AF08.png",
+    "nobg_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons_nobg/icon_AF08_nobg.png",
+    "original_size": [
+      42,
+      43
+    ],
+    "resized_size": [
+      500,
+      512
+    ],
+    "pad_left": 6,
+    "pad_top": 0
+  },
+  {
+    "id": 8,
+    "label": "<AF>09",
+    "label_clean": "AF09",
+    "x1": 431,
+    "y1": 402,
+    "x2": 476,
+    "y2": 450,
+    "width": 45,
+    "height": 48,
+    "crop_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons/icon_AF09.png",
+    "nobg_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons_nobg/icon_AF09_nobg.png",
+    "original_size": [
+      45,
+      48
+    ],
+    "resized_size": [
+      480,
+      512
+    ],
+    "pad_left": 16,
+    "pad_top": 0
+  },
+  {
+    "id": 9,
+    "label": "<AF>10",
+    "label_clean": "AF10",
+    "x1": 597,
+    "y1": 185,
+    "x2": 642,
+    "y2": 233,
+    "width": 45,
+    "height": 48,
+    "crop_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons/icon_AF10.png",
+    "nobg_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons_nobg/icon_AF10_nobg.png",
+    "original_size": [
+      45,
+      48
+    ],
+    "resized_size": [
+      480,
+      512
+    ],
+    "pad_left": 16,
+    "pad_top": 0
+  },
+  {
+    "id": 10,
+    "label": "<AF>11",
+    "label_clean": "AF11",
+    "x1": 496,
+    "y1": 402,
+    "x2": 540,
+    "y2": 450,
+    "width": 44,
+    "height": 48,
+    "crop_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons/icon_AF11.png",
+    "nobg_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons_nobg/icon_AF11_nobg.png",
+    "original_size": [
+      44,
+      48
+    ],
+    "resized_size": [
+      469,
+      512
+    ],
+    "pad_left": 21,
+    "pad_top": 0
+  },
+  {
+    "id": 11,
+    "label": "<AF>12",
+    "label_clean": "AF12",
+    "x1": 597,
+    "y1": 110,
+    "x2": 642,
+    "y2": 158,
+    "width": 45,
+    "height": 48,
+    "crop_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons/icon_AF12.png",
+    "nobg_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons_nobg/icon_AF12_nobg.png",
+    "original_size": [
+      45,
+      48
+    ],
+    "resized_size": [
+      480,
+      512
+    ],
+    "pad_left": 16,
+    "pad_top": 0
+  },
+  {
+    "id": 12,
+    "label": "<AF>13",
+    "label_clean": "AF13",
+    "x1": 30,
+    "y1": 205,
+    "x2": 82,
+    "y2": 257,
+    "width": 52,
+    "height": 52,
+    "crop_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons/icon_AF13.png",
+    "nobg_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons_nobg/icon_AF13_nobg.png",
+    "original_size": [
+      52,
+      52
+    ],
+    "resized_size": [
+      512,
+      512
+    ],
+    "pad_left": 0,
+    "pad_top": 0
+  },
+  {
+    "id": 13,
+    "label": "<AF>14",
+    "label_clean": "AF14",
+    "x1": 372,
+    "y1": 185,
+    "x2": 446,
+    "y2": 258,
+    "width": 74,
+    "height": 73,
+    "crop_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons/icon_AF14.png",
+    "nobg_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons_nobg/icon_AF14_nobg.png",
+    "original_size": [
+      74,
+      73
+    ],
+    "resized_size": [
+      512,
+      505
+    ],
+    "pad_left": 0,
+    "pad_top": 3
+  },
+  {
+    "id": 14,
+    "label": "<AF>15",
+    "label_clean": "AF15",
+    "x1": 373,
+    "y1": 108,
+    "x2": 446,
+    "y2": 182,
+    "width": 73,
+    "height": 74,
+    "crop_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons/icon_AF15.png",
+    "nobg_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons_nobg/icon_AF15_nobg.png",
+    "original_size": [
+      73,
+      74
+    ],
+    "resized_size": [
+      505,
+      512
+    ],
+    "pad_left": 3,
+    "pad_top": 0
+  },
+  {
+    "id": 15,
+    "label": "<AF>16",
+    "label_clean": "AF16",
+    "x1": 30,
+    "y1": 123,
+    "x2": 82,
+    "y2": 174,
+    "width": 52,
+    "height": 51,
+    "crop_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons/icon_AF16.png",
+    "nobg_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons_nobg/icon_AF16_nobg.png",
+    "original_size": [
+      52,
+      51
+    ],
+    "resized_size": [
+      512,
+      502
+    ],
+    "pad_left": 0,
+    "pad_top": 5
+  },
+  {
+    "id": 16,
+    "label": "<AF>17",
+    "label_clean": "AF17",
+    "x1": 922,
+    "y1": 385,
+    "x2": 994,
+    "y2": 495,
+    "width": 72,
+    "height": 110,
+    "crop_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons/icon_AF17.png",
+    "nobg_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons_nobg/icon_AF17_nobg.png",
+    "original_size": [
+      72,
+      110
+    ],
+    "resized_size": [
+      335,
+      512
+    ],
+    "pad_left": 88,
+    "pad_top": 0
+  },
+  {
+    "id": 17,
+    "label": "<AF>18",
+    "label_clean": "AF18",
+    "x1": 233,
+    "y1": 385,
+    "x2": 306,
+    "y2": 495,
+    "width": 73,
+    "height": 110,
+    "crop_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons/icon_AF18.png",
+    "nobg_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons_nobg/icon_AF18_nobg.png",
+    "original_size": [
+      73,
+      110
+    ],
+    "resized_size": [
+      340,
+      512
+    ],
+    "pad_left": 86,
+    "pad_top": 0
+  },
+  {
+    "id": 18,
+    "label": "<AF>19",
+    "label_clean": "AF19",
+    "x1": 138,
+    "y1": 391,
+    "x2": 190,
+    "y2": 434,
+    "width": 52,
+    "height": 43,
+    "crop_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons/icon_AF19.png",
+    "nobg_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons_nobg/icon_AF19_nobg.png",
+    "original_size": [
+      52,
+      43
+    ],
+    "resized_size": [
+      512,
+      423
+    ],
+    "pad_left": 0,
+    "pad_top": 44
+  },
+  {
+    "id": 19,
+    "label": "<AF>20",
+    "label_clean": "AF20",
+    "x1": 141,
+    "y1": 439,
+    "x2": 188,
+    "y2": 482,
+    "width": 47,
+    "height": 43,
+    "crop_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons/icon_AF20.png",
+    "nobg_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons_nobg/icon_AF20_nobg.png",
+    "original_size": [
+      47,
+      43
+    ],
+    "resized_size": [
+      512,
+      468
+    ],
+    "pad_left": 0,
+    "pad_top": 22
+  },
+  {
+    "id": 20,
+    "label": "<AF>21",
+    "label_clean": "AF21",
+    "x1": 549,
+    "y1": 379,
+    "x2": 651,
+    "y2": 495,
+    "width": 102,
+    "height": 116,
+    "crop_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons/icon_AF21.png",
+    "nobg_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons_nobg/icon_AF21_nobg.png",
+    "original_size": [
+      102,
+      116
+    ],
+    "resized_size": [
+      450,
+      512
+    ],
+    "pad_left": 31,
+    "pad_top": 0
+  },
+  {
+    "id": 21,
+    "label": "<AF>22",
+    "label_clean": "AF22",
+    "x1": 719,
+    "y1": 131,
+    "x2": 830,
+    "y2": 227,
+    "width": 111,
+    "height": 96,
+    "crop_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons/icon_AF22.png",
+    "nobg_path": "/kaggle/working/monica-proxy/test_images5/original_3_output/icons_nobg/icon_AF22_nobg.png",
+    "original_size": [
+      111,
+      96
+    ],
+    "resized_size": [
+      512,
+      443
+    ],
+    "pad_left": 0,
+    "pad_top": 34
+  }
+]
