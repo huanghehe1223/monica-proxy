@@ -4,9 +4,10 @@ args = [
   "-s",
   "/kaggle/working/Edit-Figure-MCP/edit_figure_mcp_server.py"
 ]
-cwd = "/kaggle/working/Edit-Figure-MCP"
 startup_timeout_sec = 60
 tool_timeout_sec = 600
 
 [mcp_servers.edit-figure.env]
+LD_LIBRARY_PATH = "/usr/local/nvidia/lib64:/usr/local/cuda/lib64:/usr/local/cuda/lib64"
+NVIDIA_VISIBLE_DEVICES = "all"
 ROBOFLOW_API_KEY = "vJfqq4sPfI9zN2gAcAOe"
